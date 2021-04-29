@@ -87,11 +87,11 @@ class _ActualGameState extends State<ActualGame>
         });
       },
       onDoubleTap: () {
-        if (_attempts < 4 && !_animationController.isAnimating) {
+        if (_attempts < 9 && !_animationController.isAnimating) {
           _attempts++;
           setState(() {
-            _top = 450 * Random().nextDouble();
-            _left = 170 * Random().nextDouble();
+            _top = (350 * Random().nextDouble()) - 50; //(-50, 300)
+            _left = (250 * Random().nextDouble()) - 50; //(-50, 200)
             currentImage = 1 + Random().nextInt(3);
           });
           _animationController.reset();

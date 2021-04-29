@@ -1,37 +1,79 @@
-import 'package:fill_the_shape/ActualGame.dart';
-import 'package:fill_the_shape/AppBarSection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'AppBarSection.dart';
+import 'package:flutter/widgets.dart';
+import 'ActualGame.dart';
+import 'package:fill_the_shape/BorderedBoxArea.dart';
+import 'Field.dart';
 
 List<Widget> initial = [
   Expanded(
     child: Icon(
-      Icons.brightness_1_outlined,
-      size: 15.0,
+      Icons.adjust_outlined,
+      color: Color(0xFF7B7676),
+      size: 25.0,
     ),
   ),
   Expanded(
     child: Icon(
-      Icons.brightness_1_outlined,
-      size: 15.0,
+      Icons.adjust_outlined,
+      color: Color(0xFF7B7676),
+      size: 25.0,
     ),
   ),
   Expanded(
     child: Icon(
-      Icons.brightness_1_outlined,
-      size: 15.0,
+      Icons.adjust_outlined,
+      color: Color(0xFF7B7676),
+      size: 25.0,
     ),
   ),
   Expanded(
     child: Icon(
-      Icons.brightness_1_outlined,
-      size: 15.0,
+      Icons.adjust_outlined,
+      color: Color(0xFF7B7676),
+      size: 25.0,
     ),
   ),
   Expanded(
     child: Icon(
-      Icons.brightness_1_outlined,
-      size: 15.0,
+      Icons.adjust_outlined,
+      color: Color(0xFF7B7676),
+      size: 25.0,
+    ),
+  ),
+  Expanded(
+    child: Icon(
+      Icons.adjust_outlined,
+      color: Color(0xFF7B7676),
+      size: 25.0,
+    ),
+  ),
+  Expanded(
+    child: Icon(
+      Icons.adjust_outlined,
+      color: Color(0xFF7B7676),
+      size: 25.0,
+    ),
+  ),
+  Expanded(
+    child: Icon(
+      Icons.adjust_outlined,
+      color: Color(0xFF7B7676),
+      size: 25.0,
+    ),
+  ),
+  Expanded(
+    child: Icon(
+      Icons.adjust_outlined,
+      color: Color(0xFF7B7676),
+      size: 25.0,
+    ),
+  ),
+  Expanded(
+    child: Icon(
+      Icons.adjust_outlined,
+      color: Color(0xFF7B7676),
+      size: 25.0,
     ),
   ),
 ];
@@ -46,73 +88,104 @@ class _GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          height: 100,
-          margin: EdgeInsets.all(0),
-          padding: EdgeInsets.all(0),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: AppBarSection(
-                  color: Colors.black,
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: AppBarSection(
-                  color: Colors.red,
-                  appBarSecChild: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: widgetList,
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Field(
+                      label: 'Level:',
+                      value: '1',
+                      textAlign: TextAlign.left,
+                    ),
                   ),
+                  Expanded(
+                    child: Field(
+                      label: 'Score:',
+                      value: '0',
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: Field(
+                      label: 'Time(seconds):',
+                      value: '3',
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(left: 70, right: 70),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: initial,
                 ),
               ),
-              Expanded(
-                child: AppBarSection(
-                  color: Colors.purple,
+            ),
+            Expanded(
+              child: BorderedBoxArea(
+                borderBoxChild: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Tap to stop the expanding figure'),
+                    Text('Double tap to take another attempt'),
+                  ],
                 ),
               ),
-              Expanded(
-                child: AppBarSection(
-                  color: Colors.lightGreen,
+            ),
+            Expanded(
+              flex: 10,
+              child: BorderedBoxArea(
+                borderBoxChild: ActualGame(
+                  onClick: (val, val2) {
+                    if (val == true) {
+                      print('Size Matched!!');
+                    } else {
+                      print('Size Did not match');
+                    }
+                    print(val2);
+
+                    setState(
+                      () {
+                        widgetList = initial;
+                        for (int i = 0; i < val2.length; i++) {
+                          if (val2[i]) {
+                            widgetList[i] = Expanded(
+                              child: Icon(
+                                Icons.check_circle,
+                                size: 25.0,
+                                color: Colors.green,
+                              ),
+                            );
+                          } else if (!val2[i]) {
+                            widgetList[i] = Expanded(
+                              child: Icon(
+                                Icons.cancel_rounded,
+                                size: 25.0,
+                                color: Colors.red,
+                              ),
+                            );
+                          }
+                        }
+                      },
+                    );
+                    //widgetList = [];
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-      body: ActualGame(onClick: (val, val2) {
-        if (val == true) {
-          print('Size Matched!!');
-        } else {
-          print('Size Did not match');
-        }
-        print(val2);
-
-        setState(() {
-          widgetList = initial;
-          for (int i = 0; i < val2.length; i++) {
-            if (val2[i]) {
-              widgetList[i] = Expanded(
-                child: Icon(
-                  Icons.check_circle,
-                  size: 15.0,
-                ),
-              );
-            } else if (!val2[i]) {
-              widgetList[i] = Expanded(
-                child: Icon(
-                  Icons.cancel_rounded,
-                  size: 15.0,
-                ),
-              );
-            }
-          }
-        });
-        //widgetList = [];
-      }),
     );
   }
 }

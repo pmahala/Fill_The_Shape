@@ -10,8 +10,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: GamePage(),
       theme: ThemeData.light().copyWith(
-        scaffoldBackgroundColor: Colors.green,
-        primaryColor: Colors.red,
+        primaryColor: Colors.white,
+        backgroundColor: Colors.white,
       ),
     );
   }
