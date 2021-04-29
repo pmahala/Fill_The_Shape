@@ -3,7 +3,7 @@ import 'AnimationWidgetStack.dart';
 import 'dart:math';
 
 class ActualGame extends StatefulWidget {
-  final Function(bool, List<bool>) onClick;
+  final Function(bool, List<bool>, int) onClick;
 
   ActualGame({@required this.onClick});
 
@@ -53,7 +53,7 @@ class _ActualGameState extends State<ActualGame>
               _responseTracker.add(false);
 
               setState(() {
-                widget.onClick(_sizeMatched, _responseTracker);
+                widget.onClick(_sizeMatched, _responseTracker, _attempts);
               });
             }
           });
@@ -83,7 +83,7 @@ class _ActualGameState extends State<ActualGame>
           }
         }
         setState(() {
-          widget.onClick(_sizeMatched, _responseTracker);
+          widget.onClick(_sizeMatched, _responseTracker, _attempts);
         });
       },
       onDoubleTap: () {
@@ -92,7 +92,7 @@ class _ActualGameState extends State<ActualGame>
           setState(() {
             _top = (350 * Random().nextDouble()) - 50; //(-50, 300)
             _left = (250 * Random().nextDouble()) - 50; //(-50, 200)
-            currentImage = 1 + Random().nextInt(3);
+            currentImage = 1 + Random().nextInt(6);
           });
           _animationController.reset();
           _animationController.forward();

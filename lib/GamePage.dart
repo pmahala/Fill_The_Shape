@@ -86,6 +86,8 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> {
   List<Widget> widgetList = initial;
 
+  int levelNumber = 1;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -100,7 +102,7 @@ class _GamePageState extends State<GamePage> {
                   Expanded(
                     child: Field(
                       label: 'Level:',
-                      value: '1',
+                      value: levelNumber.toString(),
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -127,7 +129,7 @@ class _GamePageState extends State<GamePage> {
                 padding: EdgeInsets.only(left: 70, right: 70),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: initial,
+                  children: widgetList,
                 ),
               ),
             ),
@@ -146,17 +148,17 @@ class _GamePageState extends State<GamePage> {
               flex: 10,
               child: BorderedBoxArea(
                 borderBoxChild: ActualGame(
-                  onClick: (val, val2) {
+                  onClick: (val, val2, attempt) {
                     if (val == true) {
                       print('Size Matched!!');
                     } else {
                       print('Size Did not match');
                     }
                     print(val2);
+                    print(attempt);
 
                     setState(
                       () {
-                        widgetList = initial;
                         for (int i = 0; i < val2.length; i++) {
                           if (val2[i]) {
                             widgetList[i] = Expanded(
